@@ -1,0 +1,171 @@
+html, body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+  color: #f3f3f3;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 20px;
+  background-color: #1f1f1f;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.container {
+  flex: 1;
+  padding: 20px;
+  background-color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-container {
+  display: flex;
+}
+
+.search-bar {
+  padding: 8px;
+  width: 200px;
+  border: none;
+  border-radius: 5px 0 0 5px;
+}
+
+.search-button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #81d3e2;
+  color: #333;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+.tabs {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-tabs li {
+  list-style-type: none;
+  display: inline;
+}
+
+.nav-tabs a {
+  color: #81d3e2;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.nav-tabs a.active {
+  font-weight: bold;
+  border-bottom: 2px solid #81d3e2;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo-container img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.policy-tabs {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.tab-button {
+  padding: 10px 20px;
+  background-color: #1f1f1f;
+  color: #81d3e2;
+  border: 1px solid #333;
+  cursor: pointer;
+  margin: 0 5px;
+  border-radius: 5px;
+}
+
+.tab-button.active {
+  background-color: #333;
+}
+
+.policy-content {
+  padding: 20px;
+  background-color: #1a1a1a;
+}
+
+.policy-section {
+  display: none;
+}
+
+.policy-section.active {
+  display: block;
+}
+
+.diagram-container {
+  display: none;
+  border: 1px solid #333;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 5px;
+  background-color: #222;
+}
+
+.diagram-container.active {
+  display: block;
+}
+
+.diagram-step {
+  position: relative;
+  margin: 10px 0;
+  padding: 10px 15px;
+  background-color: #81d3e2;
+  color: #333;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.diagram-step:hover {
+  background-color: #63b8c1;
+}
+
+.diagram-step::before {
+  content: attr(data-step);
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.step-content {
+  display: none;
+  margin-top: 10px;
+  padding-left: 20px;
+  font-size: 0.9em;
+  color: #ccc;
+}
+
+.step-content.active {
+  display: block;
+}
+
+.footer {
+  padding: 15px;
+  background-color: #1f1f1f;
+  text-align: center;
+  color: #81d3e2;
+  position: relative;
+  bottom: 0;
+}
+
+.support-link {
+  color: #81d3e2;
+  text-decoration: none;
+}

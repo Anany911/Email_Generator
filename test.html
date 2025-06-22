@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Generator</title>
+  <style>
+    #copyButton {
+            cursor: pointer;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    h1 {
+      color: #333;
+    }
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+    }
+    select, input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    hr {
+      margin: 20px 0;
+      border: 0;
+      border-top: 1px solid #ddd;
+    }
+    pre {
+      white-space: pre-wrap;
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 4px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+<h1 style="text-align: center;">Email Generator</h1>
+
+<form id="emailForm">
+  <label for="issue">Select Issue:</label>
+  <select id="issue" required>
+    <option value="">-- Select an Issue --</option>
+    <option value="DeliveredNotReceived">Delivered not Received</option>
+    <option value="DefectiveItem">Defective Item</option>
+    <option value="Other">Other</option>
+    <!-- Add more options as needed -->
+  </select>
+
+  <div id="defectiveOptionsSection" style="display: none;">
+    <label for="defectiveSolution">Defective Item Solution:</label>
+    <select id="defectiveSolution" required>
+      <option value="">-- Select a Solution --</option>
+      <option value="ReturnOnRefund">Return on Refund</option>
+      <option value="ReturnlessRefund">Returnless Refund</option>
+    </select>
+
+    <div id="returnMethodSection" style="display: none;">
+      <label for="returnMethod">Return Method:</label>
+      <select id="returnMethod">
+        <option value="">-- Select Return Method --</option>
+        <option value="QRCodeRoyalMailDropOff">QR code RoyalMail drop off</option>
+        <option value="RoyalMailPrintableLabel">RoyalMail printable label</option>
+        <option value="EvriQRCodeDropOff">Evri QR code drop off</option>
+        <option value="EvriDropOffPrintableLabel">Evri drop off printable label</option>
+        <option value="HomeCollectionByRoyalMail">Home collection by RoyalMail</option>
+        <option value="HomeCollectionEvri">Home collection Evri</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="replacementRefundSection" style="display: none;">
+    <label for="replacementRefund">Replacement or Refund:</label>
+    <select id="replacementRefund" required>
+      <option value="">-- Select an Option --</option>
+      <option value="Replacement">Replacement</option>
+      <option value="Refund">Refund</option>
+    </select>
+  </div>
+
+  <div id="orderDetailsSection" style="display: none;">
+    <label for="originalOrderID">Original Order ID:</label>
+    <input type="text" id="originalOrderID">
+  </div>
+
+  <div id="newOrderDetailsSection" style="display: none;">
+    <label for="newOrderID">New Order ID:</label>
+    <input type="text" id="newOrderID">
+  </div>
+
+  <div id="refundMethodSection" style="display: none;">
+    <label for="refundMethod">Refund Method:</label>
+    <select id="refundMethod" required>
+      <option value="">-- Select Refund Method --</option>
+      <option value="OriginalPaymentMethod">Original Payment Method (3-5 business days)</option>
+      <option value="GiftCardBalance">Gift Card Balance (24 hours)</option>
+    </select>
+  </div>
+
+  <div id="deliveryDateSection" style="display: none;">
+    <label for="deliveryDate">New Delivery Date:</label>
+    <input type="date" id="deliveryDate">
+  </div>
+
+  <label for="customerName">Customer's Name:</label>
+  <input type="text" id="customerName" required>
+
+  <label for="yourName">Your Name:</label>
+  <input type="text" id="yourName" required>
+
+  <label for="contactMethod">Contact Method:</label>
+  <select id="contactMethod" required>
+    <option value="Call">Call</option>
+    <option value="Chat">Chat</option>
+  </select>
+
+  <button type="button" onclick="generateEmail()">Generate Email</button>
+</form>
+
+<hr>
+
+<h2>Generated Email</h2>
+<pre id="generatedEmail"></pre>
+<button class="copyButton" onclick="copyText('generatedEmail')">Copy</button>
+
+<h2>Contact Annotation</h2>
+<pre id="contactAnnotation"></pre>
+<button class="copyButton" onclick="copyText('contactAnnotation')">Copy</button>
+
+<script>
+  function generateEmail() {
+    // Fetch user inputs
+    var issue = document.getElementById('issue').value;
+    var defectiveSolution = document.getElementById('defectiveSolution').value;
+    var returnMethod = document.getElementById('returnMethod').value;
+    var replacementRefund = document.getElementById('replacementRefund').value;
+    var originalOrderID = document.getElementById('originalOrderID').value;
+    var newOrderID = document.getElementById('newOrderID').value;
+    var refundMethod = document.getElementById('refundMethod').value;
+    var deliveryDate = document.getElementById('deliveryDate').value;
+    var customerName = document.getElementById('customerName').value;
+    var yourName = document.getElementById('yourName').value;
+    var contactMethod = document.getElementById('contactMethod').value;
+
+    // Generate email content based on user inputs
+    var emailContent = generateEmailContent(issue, defectiveSolution, returnMethod, replacementRefund, originalOrderID, newOrderID, refundMethod, deliveryDate, customerName, yourName, contactMethod);
+
+    // Display generated email
+    document.getElementById('generatedEmail').innerHTML = emailContent;
+
+    // Generate contact annotation
+    var contactAnnotation = generateContactAnnotation(issue, defectiveSolution, returnMethod, replacementRefund, originalOrderID, newOrderID, refundMethod, contactMethod);
+    document.getElementById('contactAnnotation').innerHTML = contactAnnotation;
+  }
+
+  function generateEmailContent(issue, defectiveSolution, returnMethod, replacementRefund, originalOrderID, newOrderID, refundMethod, deliveryDate, customerName, yourName, contactMethod) {
+    // Customize this function to generate email content based on user inputs
+    var greeting = `Hi ${customerName},\n\nThis is ${yourName} from our team writing to confirm what we discussed on the ${contactMethod.toLowerCase()}. `;
+
+    var message = '';
+
+    if (issue === 'DeliveredNotReceived') {
+      if (replacementRefund === 'Replacement') {
+        message = `I apologize that your order was not delivered. We've arranged a replacement for you, and here is your new order ID: ${newOrderID}.`;
+      } else if (replacementRefund === 'Refund') {
+        if (refundMethod === 'OriginalPaymentMethod') {
+          message = `I apologize that your order was not delivered. We've processed a refund for order ID ${originalOrderID} to your original payment method. Please allow 3-5 business days for the refund to reflect in your account.`;
+        } else if (refundMethod === 'GiftCardBalance') {
+          message = `I apologize that your order was not delivered. We've processed a refund for order ID ${originalOrderID} to your gift card balance. The refund will be available within 24 hours.`;
+        }
+      }
+    } else if (issue === 'DefectiveItem') {
+      if (defectiveSolution === 'ReturnOnRefund') {
+        message = `I apologize that your order was not delivered. We've processed a return on refund for your defective item. The return method you selected is ${returnMethod}. The return information has been sent to your email.`;
+      } else if (defectiveSolution === 'ReturnlessRefund') {
+        message = `I apologize that your order was not delivered. We've processed a returnless refund for your defective item.`;
+      }
+    } else {
+      message = `I wanted to reach out regarding the issue you reported. We are currently looking into it and will get back to you with a resolution as soon as possible. If you have any further questions or concerns, feel free to reach out.`;
+    }
+
+    return `${greeting}\n\n${message}\n\nBest regards,\n${yourName}`;
+  }
+
+  function generateContactAnnotation(issue, defectiveSolution, returnMethod, replacementRefund, originalOrderID, newOrderID, refundMethod, contactMethod) {
+    // Customize this function to generate contact annotation based on user inputs
+    var annotation = `Issue: ${issue}\n`;
+    if (issue === 'DefectiveItem') {
+      annotation += `Defective Item Solution: ${defectiveSolution}\n`;
+      if (defectiveSolution === 'ReturnOnRefund') {
+        annotation += `Return Method: ${returnMethod}\n`;
+      }
+    }
+    if (replacementRefund === 'Replacement') {
+      annotation += `Original Order ID: ${originalOrderID}\n`;
+      annotation += `New Order ID: ${newOrderID}\n`;
+    } else if (replacementRefund === 'Refund') {
+      annotation += `Original Order ID: ${originalOrderID}\n`;
+      annotation += `Refund Method: ${refundMethod}\n`;
+    }
+    annotation += `Contact Method: ${contactMethod}`;
+
+    return annotation;
+  }
+
+  // Show/hide sections based on user selections
+  document.getElementById('issue').addEventListener('change', function() {
+    var defectiveOptionsSection = document.getElementById('defectiveOptionsSection');
+    var returnMethodSection = document.getElementById('returnMethodSection');
+    var replacementRefundSection = document.getElementById('replacementRefundSection');
+    var orderDetailsSection = document.getElementById('orderDetailsSection');
+    var newOrderDetailsSection = document.getElementById('newOrderDetailsSection');
+    var refundMethodSection = document.getElementById('refundMethodSection');
+    var deliveryDateSection = document.getElementById('deliveryDateSection');
+
+    if (this.value === 'DefectiveItem') {
+      defectiveOptionsSection.style.display = 'block';
+      returnMethodSection.style.display = 'none'; // Hide return method initially
+      replacementRefundSection.style.display = 'none';
+      orderDetailsSection.style.display = 'none';
+      newOrderDetailsSection.style.display = 'none';
+      refundMethodSection.style.display = 'none';
+      deliveryDateSection.style.display = 'none';
+    } else if (this.value === 'DeliveredNotReceived') {
+      defectiveOptionsSection.style.display = 'none';
+      returnMethodSection.style.display = 'none';
+      replacementRefundSection.style.display = 'block';
+      orderDetailsSection.style.display = 'block';
+      newOrderDetailsSection.style.display = 'block';
+      refundMethodSection.style.display = 'block';
+      deliveryDateSection.style.display = 'block';
+    } else {
+      defectiveOptionsSection.style.display = 'none';
+      returnMethodSection.style.display = 'none';
+      replacementRefundSection.style.display = 'none';
+      orderDetailsSection.style.display = 'none';
+      newOrderDetailsSection.style.display = 'none';
+      refundMethodSection.style.display = 'none';
+      deliveryDateSection.style.display = 'none';
+      // Add more conditions as needed
+    }
+  });
+
+  document.getElementById('defectiveSolution').addEventListener('change', function() {
+    var returnMethodSection = document.getElementById('returnMethodSection');
+    if (this.value === 'ReturnOnRefund') {
+      returnMethodSection.style.display = 'block';
+    } else {
+      returnMethodSection.style.display = 'none';
+    }
+  });
+
+  document.getElementById('replacementRefund').addEventListener('change', function() {
+    var orderDetailsSection = document.getElementById('orderDetailsSection');
+    var newOrderDetailsSection = document.getElementById('newOrderDetailsSection');
+    var refundMethodSection = document.getElementById('refundMethodSection');
+
+    if (this.value === 'Replacement') {
+      orderDetailsSection.style.display = 'block';
+      newOrderDetailsSection.style.display = 'block';
+      refundMethodSection.style.display = 'none';
+    } else if (this.value === 'Refund') {
+      orderDetailsSection.style.display = 'block';
+      newOrderDetailsSection.style.display = 'none';
+      refundMethodSection.style.display = 'block';
+    } else {
+      orderDetailsSection.style.display = 'none';
+      newOrderDetailsSection.style.display = 'none';
+      refundMethodSection.style.display = 'none';
+    }
+  });
+  
+    function copyText(generatedEmail) {
+        // Select the text inside the specified <pre> element
+        var preElement = document.getElementById(generatedEmail);
+        var range = document.createRange();
+        range.selectNode(preElement);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+
+        // Copy the selected text
+        document.execCommand('copy');
+
+        // Deselect the text
+        window.getSelection().removeAllRanges();
+
+        // Provide visual feedback (optional)
+        var copyButton = document.querySelector('.copyButton');
+        copyButton.innerHTML = 'Copied!';
+        setTimeout(function() {
+            copyButton.innerHTML = 'Copy';
+        }, 1500);
+    }
+ 
+   function copyText(contactAnnotation) {
+        // Select the text inside the specified <pre> element
+        var preElement = document.getElementById(contactAnnotation);
+        var range = document.createRange();
+        range.selectNode(preElement);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+
+        // Copy the selected text
+        document.execCommand('copy');
+
+        // Deselect the text
+        window.getSelection().removeAllRanges();
+
+        // Provide visual feedback (optional)
+        var copyButton = document.querySelector('.copyButton');
+        copyButton.innerHTML = 'Copied!';
+        setTimeout(function() {
+            copyButton.innerHTML = 'Copy';
+        }, 1500);
+    }
+</script>
+
+</body>
+</html>

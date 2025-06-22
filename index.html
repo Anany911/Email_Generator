@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script src="script.js"></script>
+
+
+</head>
+<link rel="shortcut icon" type="image/x-icon" href="images/icon.ico" />
+<body>
+  <div class="header">
+
+    <div class="tabs">
+      <ul class="nav-tabs">
+          <li><a href="index.html" class="active">Email Generator</a></li>
+          <li><a href="policy22.html">CS-Assistant</a></li>
+      </ul>
+      </div>
+
+  <div class="darkmode-toggle">
+      <input type="checkbox" id="darkmode-toggle">
+      <label for="darkmode-toggle">
+        <span></span>
+      </label>
+  </div>
+  
+    <div class="logo-container">
+      <img src="logo 13.png" alt="Website Logo" class="logo">
+      <h1 id="refresh-page">Email Generator</h1>
+    </div>
+
+  </div>
+    
+<div class="top-container">
+
+    <div class="name-container">
+      <textarea id="name-english" rows="3" cols="30" placeholder="English Name"></textarea>
+
+      <textarea id="name-arabic" rows="3" cols="30" placeholder="الأسم بالعربي"></textarea>
+    </div>
+
+    <div class="lang-switcher">
+        <label for="language">Language:</label>
+        <select id="language" onchange="switchLanguage()">
+          <option value="en">English</option>
+          <option value="ar">Arabic</option>
+        </select>
+    </div>
+      
+    <div class="country-switcher">
+        <label for="country">OU:</label>  
+        <select id="country" onchange="switchCountry()">
+          <option value="EG">Egypt</option>
+          <option value="SA">Saudi Arabia</option>
+          <option value="AE">United Arab Emirates</option>
+        </select>
+    </div>
+    
+  </div>
+
+<div class="container">
+    <div class="input-container">
+      <div class="order-box">
+        <form id="order-form">  
+          <label for="order-id">Order ID</label>
+          <input type="text" id="order-id" name="order-id" placeholder="Enter Order ID (e.g., 402-123456-78900)">
+          
+          <label for="amount">Amount (If Needed)</label>
+          <input type="text" id="amount" name="amount" placeholder="Enter Amount">
+          
+          <label for="select-customer-issue">Customer Issue</label>
+          <select id="select-customer-issue" name="select-customer-issue" onchange="updateMoreInfo()">
+            <option value="pre-delivery">Pre-Delivery</option>
+            <option value="dnr">DNR</option>
+            <option value="item-missing">Item Missing</option>
+            <option value="empty-box">Empty Box</option>
+            <option value="part-missing">Part Missing</option>
+            <option value="damaged-defective">Damaged or Defective</option>
+            <option value="wrong-item">Wrong Item</option>
+            <option value="return">Return</option>
+            <option value="any-carrier">Any Carrier</option>
+            <option value="mdr">MDR</option>
+            <option value="refund">Refunds</option>
+            <option value="ofm">OFM</option>
+            <option value="others">Others</option>
+          </select>
+          
+          <label for="select-more-info">Action</label>
+          <select id="select-more-info" name="select-more-info"></select>
+          
+          <label for="additional-details">Additional Details</label>
+          <input type="text" id="additional-details" name="additional-details" placeholder="Enter Additional Details">    
+          
+          <div class="checkbox-container">
+            <!-- <input type="checkbox" id="checkbox-90-days"> -->
+            <label >Reminder For High Value: EGP 7655, SAR 935, AED 915</label>
+          </div>
+          
+          <input type="date" id="datePicker">
+          <input type="submit" value="Generate">
+          
+          <div class="sla-container">
+            <h2>SLA Calculator</h2>
+            <div id="results">
+                <p id="result3">Date after 3 days: </p>
+                <p id="result14">Date after 14 days: </p>
+                <p id="result30">Date after 30 days: </p>
+                <p id="result60">Date after 60 days: </p>
+                <p id="result90">Date after 90 days: </p>
+            </div>
+        </div>  
+
+        </form>
+      </div>
+    </div>
+  
+    <div class="result-container">
+      <div class="result-box" id="result-box" style="height: 450px;">
+        <h3>Your Email</h3> 
+        <textarea id="related-data" style="height: 350px;"></textarea>
+        <button class="copy-button" onclick="copyData()">Copy Email</button>
+        
+        <div id="link-container"></div>
+          <!-- <h4>Related Links</h4> -->
+          <ul id="links-list"></ul> 
+        </div>
+      </div>
+    </div>
+
+  <div class="footer">
+    &copy; 2024 Ahmanany || All Rights Reserved
+    <a href="https://issues.amazon.com/issues/create?templateIssue=97030208-2e0c-4670-9832-cbf2e6b9e53b" target="_blank" class="support-link">Create a Support Ticket</a>
+  </div>
+
+<input type="checkbox" id="darkmode-toggle" />
+</body>
+</html>
